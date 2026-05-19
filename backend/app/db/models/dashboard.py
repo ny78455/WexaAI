@@ -29,7 +29,7 @@ class Dashboard(Base, TimestampMixin):
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 
     organization: Mapped["Organization"] = relationship("Organization", back_populates="dashboards")
-    widgets: Mapped[list["Widget"]] = relationship("Widget", back_populates="dashboard", cascade="all, delete-orphan")
+    widgets: Mapped[list["Widget"]] = relationship("Widget", back_populates="dashboard", cascade="all, delete-orphan", lazy="selectin")
 
 
 class Widget(Base, TimestampMixin):
@@ -38,7 +38,7 @@ class Widget(Base, TimestampMixin):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     dashboard_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("dashboards.id"), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
-    type: Mapped[WidgetType] = mapped_column(Enum(WidgetType), nullable=False)
+    type: Mapped[WidgetType] = mapped_column(Enum(WidgetType, values_callable=lambda obj: [e.value for e in obj]), nullable=False)
     query_config: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)
     position: Mapped[dict] = mapped_column(JSONB, nullable=False, default=dict)  # {x, y, w, h}
     time_range: Mapped[str] = mapped_column(String(50), default="7d")  # 1h, 24h, 7d, 30d

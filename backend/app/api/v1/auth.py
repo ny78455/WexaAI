@@ -13,10 +13,21 @@ from app.schemas.auth import (
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
+from sqlalchemy.exc import IntegrityError
+from fastapi import HTTPException, status
+
 @router.post("/signup", response_model=TokenResponse, status_code=201)
 async def signup(data: UserCreate, response: Response, db: AsyncSession = Depends(get_db)):
     svc = AuthService(db)
-    user = await svc.signup(data)
+    try:
+        user = await svc.signup(data)
+    except IntegrityError:
+        # Catch the duplicate email error gracefully
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="A user with this email already exists."
+        )
+    
     access_token, _ = await svc.login(UserLogin(email=data.email, password=data.password), response)
     return TokenResponse(access_token=access_token, user=UserOut.model_validate(user))
 
@@ -57,7 +68,7 @@ async def me(current_user: CurrentUser):
 @router.post("/invite", response_model=dict, status_code=201)
 async def create_invite(
     data: InviteCreate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ADMIN)),
+    current_user = Depends(require_min_role(UserRole.ADMIN)),
     db: AsyncSession = Depends(get_db),
 ):
     svc = AuthService(db)

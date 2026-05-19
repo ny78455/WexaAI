@@ -19,7 +19,7 @@ router = APIRouter(prefix="/dashboards", tags=["Dashboards"])
 @router.post("/", response_model=DashboardOut, status_code=201)
 async def create_dashboard(
     data: DashboardCreate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = DashboardRepository(db)
@@ -59,7 +59,7 @@ async def get_dashboard(dashboard_id: uuid.UUID, current_user: CurrentUser, db: 
 async def update_dashboard(
     dashboard_id: uuid.UUID,
     data: DashboardUpdate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = DashboardRepository(db)
@@ -74,7 +74,7 @@ async def update_dashboard(
 @router.post("/{dashboard_id}/share", response_model=dict)
 async def generate_share_link(
     dashboard_id: uuid.UUID,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = DashboardRepository(db)
@@ -88,7 +88,7 @@ async def generate_share_link(
 @router.delete("/{dashboard_id}", status_code=204)
 async def delete_dashboard(
     dashboard_id: uuid.UUID,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = DashboardRepository(db)
@@ -104,7 +104,7 @@ async def delete_dashboard(
 async def add_widget(
     dashboard_id: uuid.UUID,
     data: WidgetCreate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     d_repo = DashboardRepository(db)
@@ -128,7 +128,7 @@ async def update_widget(
     dashboard_id: uuid.UUID,
     widget_id: uuid.UUID,
     data: WidgetUpdate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     d_repo = DashboardRepository(db)
@@ -148,7 +148,7 @@ async def update_widget(
 async def delete_widget(
     dashboard_id: uuid.UUID,
     widget_id: uuid.UUID,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     d_repo = DashboardRepository(db)

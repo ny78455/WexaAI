@@ -32,8 +32,8 @@ class AlertRule(Base, TimestampMixin):
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     condition: Mapped[dict] = mapped_column(JSONB, nullable=False)  # {metric, operator, threshold, window_minutes}
     notification_channels: Mapped[list] = mapped_column(JSONB, nullable=False, default=list)  # [{type, config}]
-    status: Mapped[AlertStatus] = mapped_column(Enum(AlertStatus), default=AlertStatus.ACTIVE)
-    severity: Mapped[AlertSeverity] = mapped_column(Enum(AlertSeverity), default=AlertSeverity.MEDIUM)
+    status: Mapped[AlertStatus] = mapped_column(Enum(AlertStatus, values_callable=lambda obj: [e.value for e in obj]), default=AlertStatus.ACTIVE)
+    severity: Mapped[AlertSeverity] = mapped_column(Enum(AlertSeverity, values_callable=lambda obj: [e.value for e in obj]), default=AlertSeverity.MEDIUM)
     muted_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     is_deleted: Mapped[bool] = mapped_column(Boolean, default=False)
 

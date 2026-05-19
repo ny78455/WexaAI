@@ -15,7 +15,7 @@ router = APIRouter(prefix="/alerts", tags=["Alerts"])
 @router.post("/", response_model=AlertRuleOut, status_code=201)
 async def create_alert(
     data: AlertRuleCreate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = AlertRepository(db)
@@ -50,7 +50,7 @@ async def get_alert(rule_id: uuid.UUID, current_user: CurrentUser, db: AsyncSess
 async def update_alert(
     rule_id: uuid.UUID,
     data: AlertRuleUpdate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = AlertRepository(db)
@@ -72,7 +72,7 @@ async def update_alert(
 @router.delete("/{rule_id}", status_code=204)
 async def delete_alert(
     rule_id: uuid.UUID,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     repo = AlertRepository(db)

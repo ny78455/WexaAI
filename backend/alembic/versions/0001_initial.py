@@ -17,16 +17,9 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    # Enums
-    userrole = postgresql.ENUM("owner", "admin", "analyst", "viewer", name="userrole")
-    userrole.create(op.get_bind(), checkfirst=True)
-    widgettype = postgresql.ENUM("line_chart", "bar_chart", "pie_chart", "kpi_card", "table", name="widgettype")
-    widgettype.create(op.get_bind(), checkfirst=True)
-    alertstatus = postgresql.ENUM("active", "triggered", "resolved", "muted", name="alertstatus")
-    alertstatus.create(op.get_bind(), checkfirst=True)
-    alertseverity = postgresql.ENUM("low", "medium", "high", "critical", name="alertseverity")
-    alertseverity.create(op.get_bind(), checkfirst=True)
-
+    # ENUMS are automatically created by SQLAlchemy during table creation when needed.
+    # explicit creation causes asyncpg DuplicateObjectError
+    
     # organizations
     op.create_table(
         "organizations",

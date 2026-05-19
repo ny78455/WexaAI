@@ -56,7 +56,7 @@ async def ingest_csv(
 @router.get("/recent", response_model=list[EventOut])
 async def get_recent_events(
     limit: int = Query(default=100, le=1000),
-    current_user: CurrentUser = Depends(),
+    current_user = Depends(),
     db: AsyncSession = Depends(get_db),
 ):
     svc = EventService(db)
@@ -69,7 +69,7 @@ async def get_recent_events(
 @api_keys_router.post("/", response_model=APIKeyCreated, status_code=201)
 async def create_api_key(
     data: APIKeyCreate,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ADMIN)),
+    current_user = Depends(require_min_role(UserRole.ADMIN)),
     db: AsyncSession = Depends(get_db),
 ):
     svc = APIKeyService(db)
@@ -79,7 +79,7 @@ async def create_api_key(
 
 @api_keys_router.get("/", response_model=list[APIKeyOut])
 async def list_api_keys(
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ANALYST)),
+    current_user = Depends(require_min_role(UserRole.ANALYST)),
     db: AsyncSession = Depends(get_db),
 ):
     svc = APIKeyService(db)
@@ -89,7 +89,7 @@ async def list_api_keys(
 @api_keys_router.delete("/{key_id}", status_code=204)
 async def revoke_api_key(
     key_id: uuid.UUID,
-    current_user: CurrentUser = Depends(require_min_role(UserRole.ADMIN)),
+    current_user = Depends(require_min_role(UserRole.ADMIN)),
     db: AsyncSession = Depends(get_db),
 ):
     svc = APIKeyService(db)
