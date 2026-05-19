@@ -1,4 +1,4 @@
-# Wexa AI — SaaS Analytics Platform
+# Athera.OS — SaaS Analytics Platform
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
@@ -7,7 +7,7 @@
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-Wexa AI is a production-ready SaaS analytics platform built for high-performance event ingestion, real-time data visualization, and threshold-based alerting. Serving as a lightweight alternative to Mixpanel or Metabase, it provides multi-tenant organizations with drag-and-drop custom dashboards and instantaneous insights.
+Athera is a production-ready SaaS analytics platform built for high-performance event ingestion, real-time data visualization, and threshold-based alerting. Serving as a lightweight alternative to Mixpanel or Metabase, it provides multi-tenant organizations with drag-and-drop custom dashboards and instantaneous insights.
 
 Demo Link - https://athera-production.up.railway.app/
 
