@@ -9,7 +9,7 @@
 
 Athera is a production-ready SaaS analytics platform built for high-performance event ingestion, real-time data visualization, and threshold-based alerting. Serving as a lightweight alternative to Mixpanel or Metabase, it provides multi-tenant organizations with drag-and-drop custom dashboards and instantaneous insights.
 
-Demo Link - https://athera-production.up.railway.app/
+Demo Link - https://frontend-wexa.vercel.app/
 
 ---
 
